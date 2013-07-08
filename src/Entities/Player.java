@@ -8,6 +8,7 @@ public class Player {
 
 	// Class references
 	Game game;
+	Projectile gp;
 
 	// Size and Location
 	private int x = 200, y = 250, width, height;
@@ -33,6 +34,9 @@ public class Player {
 		applyGravity();
 		applyFriction();
 		checkBoundaries();
+
+		if (gp != null)
+			gp.tick();
 	}
 
 	public void scanMovementInput() {
@@ -47,6 +51,10 @@ public class Player {
 		if (game.getInputHandler().up.down && canJump) {
 			yVel = jumpHeight;
 			canJump = false;
+		}
+
+		if (game.getInputHandler().leftButton) {
+			gp = new Projectile(game, x + 10, y, game.mouseP.x, game.mouseP.y);
 		}
 	}
 
@@ -88,6 +96,8 @@ public class Player {
 			g.drawImage(game.getResMan().getPlayerImageLeft(), x, y, game);
 		if (!goLeft)
 			g.drawImage(game.getResMan().getPlayerImageRight(), x, y, game);
+		if (gp != null)
+			gp.render(g);
 	}
 
 	// Getters and Setters

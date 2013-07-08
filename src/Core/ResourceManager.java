@@ -6,7 +6,7 @@ import javax.imageio.ImageIO;
 
 public class ResourceManager {
 
-	private BufferedImage platformImage, playerImageLeft, playerImageRight, backgroundImage;
+	private BufferedImage platformImage, playerImageLeft, playerImageRight, backgroundImage, projectileImage;
 
 	public ResourceManager(Game game) {
 		loadImages();
@@ -18,6 +18,7 @@ public class ResourceManager {
 			setPlayerImageLeft(ImageIO.read(this.getClass().getClassLoader().getResourceAsStream("Images/head.png")));
 			setPlayerImageRight(ImageIO.read(this.getClass().getClassLoader().getResourceAsStream("Images/headflip.png")));
 			setBackgroundImage(ImageIO.read(this.getClass().getClassLoader().getResourceAsStream("Images/Background 800x600.png")));
+			setProjectileImage(ImageIO.read(this.getClass().getClassLoader().getResourceAsStream("Images/projectile.png")));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -55,5 +56,13 @@ public class ResourceManager {
 
 	public void setPlayerImageRight(BufferedImage playerImageRight) {
 		this.playerImageRight = playerImageRight;
+	}
+
+	public BufferedImage getProjectileImage() {
+		return projectileImage;
+	}
+
+	public void setProjectileImage(BufferedImage projectileImage) {
+		this.projectileImage = projectileImage;
 	}
 }
