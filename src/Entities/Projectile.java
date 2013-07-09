@@ -6,41 +6,73 @@ import Core.Game;
 
 public class Projectile {
 	Game game;
-	int x, y, destX, destY;
-	int movementSpeed = 1;
+	private int x, y, xVel, yVel;
+	private int movementSpeed = 3;
+	private int ticks = 0;
 
-	public Projectile(Game game, int x, int y, int destinationX, int destinationY) {
+	public Projectile(Game game, int x, int y) {
 		this.game = game;
 		this.x = x;
 		this.y = y;
-		this.destX = destinationX - (61 / 2);
-		this.destY = destinationY - (60 / 2);
+		if (game.mouseP.x > x) {
+			xVel = movementSpeed * 2;
+		} else {
+			xVel = -movementSpeed * 2;
+		}
 	}
 
 	public void tick() {
-		if (destX > x && destY < y) {
-			x += movementSpeed;
-			y -= movementSpeed;
-		} else if (destX > x && destY > y) {
-			x += movementSpeed;
-			y += movementSpeed;
-		} else if (destX < x && destY > y) {
-			x -= movementSpeed;
-			y += movementSpeed;
-		} else if (destX < x && destY < y) {
-			x -= movementSpeed;
-			y -= movementSpeed;
-		} else if (destX < x)
-			x -= movementSpeed;
-		else if (destX > x)
-			x += movementSpeed;
-		else if (destY < y)
-			y -= movementSpeed;
-		else if (destY > y)
-			y += movementSpeed;
+		yVel = -movementSpeed;
+
+		applyMovement();
+		applyFriction();
+	}
+
+	public void applyMovement() {
+		x += xVel;
+		y += yVel;
+	}
+
+	public void applyFriction() {
+		if (ticks % 10 == 0) {
+			if (xVel > 0) {
+				xVel -= 1;
+			} else if (xVel < 0) {
+				xVel += 1;
+			}
+			ticks = 0;
+		}
+
+		ticks++;
 	}
 
 	public void render(Graphics g) {
 		g.drawImage(game.getResMan().getProjectileImage(), x, y, game);
+	}
+
+	// Getters and Setters
+
+	public int getxVel() {
+		return xVel;
+	}
+
+	public void setxVel(int xVel) {
+		this.xVel = xVel;
+	}
+
+	public int getyVel() {
+		return yVel;
+	}
+
+	public void setyVel(int yVel) {
+		this.yVel = yVel;
+	}
+
+	public int getTicks() {
+		return ticks;
+	}
+
+	public void setTicks(int ticks) {
+		this.ticks = ticks;
 	}
 }

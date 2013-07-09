@@ -54,7 +54,7 @@ public class Player {
 		}
 
 		if (game.getInputHandler().leftButton) {
-			gp = new Projectile(game, x + 10, y, game.mouseP.x, game.mouseP.y);
+			gp = new Projectile(game, x + width / 2, y + height / 2);
 		}
 	}
 
